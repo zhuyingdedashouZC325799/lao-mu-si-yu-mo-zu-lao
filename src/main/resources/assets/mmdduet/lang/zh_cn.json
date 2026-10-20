@@ -1,0 +1,9 @@
+{
+  "entity.mmdduet.si": "老牧祀",
+  "entity.mmdduet.liino": "梨诺",
+  "item.mmdduet.si_spawn_egg": "老牧祀刷怪蛋",
+  "item.mmdduet.liino_spawn_egg": "梨诺刷怪蛋",
+  "subtitle.mmdduet.duet": "老牧祀与梨诺的合唱",
+  "death.attack.mmdduet.kick": "%1$s 被 %2$s 一脚踹死了",
+  "death.attack.mmdduet.kick.player": "%1$s 在与 %2$s 的对唱中挨了一脚"
+}

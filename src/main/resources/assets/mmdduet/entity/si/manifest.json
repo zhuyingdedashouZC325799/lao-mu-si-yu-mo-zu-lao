@@ -1,0 +1,175 @@
+{
+ "tag": "si",
+ "format": 2,
+ "vertexCount": 63503,
+ "indexCount": 219111,
+ "boneCount": 828,
+ "yMin": -0.00018711583106778562,
+ "yMax": 22.40972137451172,
+ "heightUnits": 22.409908490342787,
+ "soleY": 1.9402626752853394,
+ "roles": {
+  "center": 1,
+  "lower": 12,
+  "upper": 13,
+  "upper1": 14,
+  "chest": 15,
+  "neck": 16,
+  "head": 17,
+  "shoulder_r": 56,
+  "arm_r": 58,
+  "elbow_r": 61,
+  "wrist_r": 64,
+  "shoulder_l": 30,
+  "arm_l": 32,
+  "elbow_l": 35,
+  "wrist_l": 38,
+  "thigh_r": 738,
+  "knee_r": 739,
+  "ankle_r": 740,
+  "thigh_l": 742,
+  "knee_l": 743,
+  "ankle_l": 744
+ },
+ "groups": [
+  {
+   "tex": 0,
+   "start": 0,
+   "count": 8196,
+   "alpha": 1.0,
+   "double": true,
+   "name": "面"
+  },
+  {
+   "tex": 1,
+   "start": 8196,
+   "count": 1344,
+   "alpha": 1.0,
+   "double": true,
+   "name": "目"
+  },
+  {
+   "tex": 1,
+   "start": 9540,
+   "count": 120,
+   "alpha": 1.0,
+   "double": true,
+   "name": "目HL"
+  },
+  {
+   "tex": 0,
+   "start": 9660,
+   "count": 648,
+   "alpha": 1.0,
+   "double": true,
+   "name": "目白"
+  },
+  {
+   "tex": 0,
+   "start": 10410,
+   "count": 4236,
+   "alpha": 1.0,
+   "double": true,
+   "name": "睫眉"
+  },
+  {
+   "tex": 0,
+   "start": 14646,
+   "count": 3870,
+   "alpha": 1.0,
+   "double": true,
+   "name": "口内"
+  },
+  {
+   "tex": 2,
+   "start": 18516,
+   "count": 27468,
+   "alpha": 1.0,
+   "double": true,
+   "name": "肌"
+  },
+  {
+   "tex": 3,
+   "start": 45984,
+   "count": 88683,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth1"
+  },
+  {
+   "tex": 4,
+   "start": 134667,
+   "count": 15198,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth2"
+  },
+  {
+   "tex": 3,
+   "start": 149865,
+   "count": 2004,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth1Alpha"
+  },
+  {
+   "tex": 5,
+   "start": 151869,
+   "count": 6462,
+   "alpha": 0.0,
+   "double": true,
+   "name": "表情"
+  },
+  {
+   "tex": 6,
+   "start": 158331,
+   "count": 59757,
+   "alpha": 1.0,
+   "double": true,
+   "name": "发"
+  }
+ ],
+ "textures": [
+  {
+   "file": "t00_t_actor_jsspsi_face_01_d.png",
+   "w": 1024,
+   "h": 1024
+  },
+  {
+   "file": "t01_t_actor_jsspsi_iris_01_d.png",
+   "w": 512,
+   "h": 512
+  },
+  {
+   "file": "t02_t_actor_jsspsi_body_01_d.png",
+   "w": 1024,
+   "h": 1024
+  },
+  {
+   "file": "t03_t_actor_jsspsi_cloth_01_d.png",
+   "w": 2048,
+   "h": 2048
+  },
+  {
+   "file": "t04_t_actor_jsspsi_cloth_02_d.png",
+   "w": 512,
+   "h": 512
+  },
+  {
+   "file": "t05_t_actor_common_female_emotion_atlas_01_d.png",
+   "w": 1024,
+   "h": 1024
+  },
+  {
+   "file": "t06_t_actor_jsspsi_hair_01_d.png",
+   "w": 2048,
+   "h": 2048
+  }
+ ],
+ "morphs": [
+  "open",
+  "wide",
+  "round",
+  "blink"
+ ]
+}

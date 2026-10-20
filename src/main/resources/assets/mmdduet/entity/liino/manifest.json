@@ -1,0 +1,265 @@
+{
+ "tag": "liino",
+ "format": 2,
+ "vertexCount": 81998,
+ "indexCount": 289182,
+ "boneCount": 553,
+ "yMin": -2.831230401992798,
+ "yMax": 21.088029861450195,
+ "heightUnits": 23.919260263442993,
+ "soleY": 1.9402623176574707,
+ "roles": {
+  "center": 58,
+  "lower": 182,
+  "upper": 67,
+  "upper1": 141,
+  "chest": 142,
+  "neck": 373,
+  "head": 374,
+  "shoulder_r": 185,
+  "arm_r": 197,
+  "elbow_r": 215,
+  "wrist_r": 232,
+  "shoulder_l": 279,
+  "arm_l": 291,
+  "elbow_l": 309,
+  "wrist_l": 326,
+  "thigh_r": 258,
+  "knee_r": 265,
+  "ankle_r": 274,
+  "thigh_l": 352,
+  "knee_l": 359,
+  "ankle_l": 368
+ },
+ "groups": [
+  {
+   "tex": 0,
+   "start": 0,
+   "count": 7050,
+   "alpha": 1.0,
+   "double": true,
+   "name": "面"
+  },
+  {
+   "tex": 1,
+   "start": 7050,
+   "count": 1008,
+   "alpha": 1.0,
+   "double": true,
+   "name": "目"
+  },
+  {
+   "tex": 1,
+   "start": 8058,
+   "count": 138,
+   "alpha": 1.0,
+   "double": true,
+   "name": "目HL"
+  },
+  {
+   "tex": 0,
+   "start": 8196,
+   "count": 270,
+   "alpha": 1.0,
+   "double": true,
+   "name": "目白"
+  },
+  {
+   "tex": 2,
+   "start": 8466,
+   "count": 108,
+   "alpha": 1.0,
+   "double": true,
+   "name": "目影"
+  },
+  {
+   "tex": 0,
+   "start": 8574,
+   "count": 2778,
+   "alpha": 1.0,
+   "double": true,
+   "name": "睫眉"
+  },
+  {
+   "tex": 0,
+   "start": 11352,
+   "count": 3318,
+   "alpha": 1.0,
+   "double": true,
+   "name": "口内"
+  },
+  {
+   "tex": 3,
+   "start": 14670,
+   "count": 48909,
+   "alpha": 1.0,
+   "double": true,
+   "name": "髪"
+  },
+  {
+   "tex": 4,
+   "start": 63579,
+   "count": 606,
+   "alpha": 1.0,
+   "double": true,
+   "name": "髪影"
+  },
+  {
+   "tex": 5,
+   "start": 64185,
+   "count": 7470,
+   "alpha": 1.0,
+   "double": true,
+   "name": "肌"
+  },
+  {
+   "tex": 6,
+   "start": 71655,
+   "count": 51615,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth1"
+  },
+  {
+   "tex": 6,
+   "start": 123270,
+   "count": 1992,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth2"
+  },
+  {
+   "tex": 6,
+   "start": 125262,
+   "count": 9264,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth3"
+  },
+  {
+   "tex": 6,
+   "start": 134526,
+   "count": 816,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth4"
+  },
+  {
+   "tex": 6,
+   "start": 135342,
+   "count": 504,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth5"
+  },
+  {
+   "tex": 6,
+   "start": 135846,
+   "count": 54654,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth6"
+  },
+  {
+   "tex": 6,
+   "start": 190500,
+   "count": 10875,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth7"
+  },
+  {
+   "tex": 6,
+   "start": 201375,
+   "count": 2178,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth8"
+  },
+  {
+   "tex": 6,
+   "start": 203553,
+   "count": 150,
+   "alpha": 1.0,
+   "double": true,
+   "name": "Cloth9"
+  },
+  {
+   "tex": 7,
+   "start": 203703,
+   "count": 42390,
+   "alpha": 1.0,
+   "double": true,
+   "name": "技能装備1"
+  },
+  {
+   "tex": 7,
+   "start": 246093,
+   "count": 37329,
+   "alpha": 1.0,
+   "double": true,
+   "name": "技能装備2"
+  },
+  {
+   "tex": 8,
+   "start": 283422,
+   "count": 5760,
+   "alpha": 0.0,
+   "double": true,
+   "name": "表情"
+  }
+ ],
+ "textures": [
+  {
+   "file": "t00_t_actor_liino_face_01_d.png",
+   "w": 1024,
+   "h": 1024
+  },
+  {
+   "file": "t01_derived_iris_inverted_alpha.png",
+   "w": 512,
+   "h": 512
+  },
+  {
+   "file": "t02_derived_eyeshadow_rgba.png",
+   "w": 32,
+   "h": 32
+  },
+  {
+   "file": "t03_t_actor_liino_hair_01_d.png",
+   "w": 2048,
+   "h": 2048
+  },
+  {
+   "file": "t04_derived_hairshadow_rgba.png",
+   "w": 32,
+   "h": 32
+  },
+  {
+   "file": "t05_t_actor_liino_body_01_d.png",
+   "w": 1024,
+   "h": 1024
+  },
+  {
+   "file": "t06_t_actor_liino_cloth_01_d.png",
+   "w": 2048,
+   "h": 2048
+  },
+  {
+   "file": "t07_t_actor_liino_skill_01_d.png",
+   "w": 1024,
+   "h": 2048
+  },
+  {
+   "file": "t08_t_actor_common_female_emotion_atlas_01_d.png",
+   "w": 1024,
+   "h": 1024
+  }
+ ],
+ "morphs": [
+  "open",
+  "wide",
+  "round",
+  "blink"
+ ]
+}

@@ -1,0 +1,9 @@
+{
+  "entity.mmdduet.si": "Lao Mushi",
+  "entity.mmdduet.liino": "Liino",
+  "item.mmdduet.si_spawn_egg": "Lao Mushi Spawn Egg",
+  "item.mmdduet.liino_spawn_egg": "Liino Spawn Egg",
+  "subtitle.mmdduet.duet": "Lao Mushi and Liino sing together",
+  "death.attack.mmdduet.kick": "%1$s was kicked to death by %2$s",
+  "death.attack.mmdduet.kick.player": "%1$s took a boot from %2$s mid-duet"
+}

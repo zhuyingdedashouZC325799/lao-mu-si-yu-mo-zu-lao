@@ -1,0 +1,12 @@
+{
+  "duet": {
+    "subtitle": "subtitle.mmdduet.duet",
+    "sounds": [
+      {
+        "name": "mmdduet:duet",
+        "stream": true,
+        "attenuation_distance": 32
+      }
+    ]
+  }
+}
