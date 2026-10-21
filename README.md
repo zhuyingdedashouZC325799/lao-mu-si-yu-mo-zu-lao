@@ -15,21 +15,25 @@
 | **26.2** | Fabric 0.20.0+ | Java 25 | 最早完成、实机验证通过 |
 | **26.1.2** | Fabric 0.19.2+ | Java 25 | 与 26.2 共用同一套源码 |
 | **26.1.2** | NeoForge 26.1.2.107 | Java 25 | 独立注册层，见 `src/neoforge` |
+| **1.20.1** | Forge 47.4.20 | Java 17+ | 独立源码树，见 `src/forge1201` |
 
 成品 jar 都在 [Releases](../../releases) 页，对应的 tag 为
-`v1.0.0-fabric-26.2`、`v1.0.0-fabric-26.1.2`、`v1.0.0-neoforge-26.1.2`。
+`v1.0.0-fabric-26.2`、`v1.0.0-fabric-26.1.2`、`v1.0.0-neoforge-26.1.2`、
+`v1.0.0-forge-1.20.1`。
 
 ### 装法
 
 1. 装好上表对应游戏版本与加载器。
 2. Fabric 版把 [Fabric API](https://modrinth.com/mod/fabric-api) 放进 `mods`；
-   NeoForge 版不需要额外前置。
+   NeoForge 与 Forge 版不需要额外前置。
 3. 把对应版本的 jar 放进 `.minecraft/mods`。
-4. 需要对应版本的 **Java**（26.x 为 Java 25）。
+4. 需要对应版本的 **Java**（26.x 为 Java 25，1.20.1 为 Java 17+）。
 
 可选但推荐：**AttributeFix**。本模组通过 `HealthCeiling` 自己放宽了原版
 `max_health` 的 1024 上限，所以不装也能正常显示 1325 点血；装了只是让其它
-读取该属性的模组也统一口径。
+读取该属性的模组也统一口径。1.20.1 的 Forge 运行时是 SRG 映射，`HealthCeiling`
+按 `maxValue` / `f_22308_` / `field_22308` 三个候选名依次反射，并带"值等价"
+兜底扫描，所以重映射不会让上限静默回落成 1024。
 
 兼容性方面声明了对 **JEI** 与 **Jade（玉）** 的软依赖：两个刷怪蛋会自动进入
 JEI 的物品列表，Jade 探头能看到名字与血量。
@@ -107,6 +111,12 @@ JEI 的物品列表，Jade 探头能看到名字与血量。
 `HealthCeiling` 在启动时用反射把这个区间改宽，因此属性里存的就是真实值——
 血条、伤害计算和 Jade 读数三方一致，存档读档也不丢。
 
+1.20.1 上还有一层坑：Forge 用 SRG 名字重映射字节码，`RangedAttribute` 的字段
+在运行期不叫 `maxValue` 而是 `f_22308_`。只认 `maxValue` 会抛
+`NoSuchFieldException` 并被 `catch` 吞掉，结果血量静静停在 1024。所以
+`HealthCeiling` 同时尝试三个名字，都失败时再遍历 `double` 字段找出"当前报告值"
+对应的那一个，确保换任何映射环境都能改成功。
+
 ---
 
 ## 四、从源码构建
@@ -137,6 +147,16 @@ python tools/packver.py build261neo
 python tools/jarverify.py out\lao-mu-si-yu-mo-zu-lao-1.0.0-neoforge-26.1.2.jar
 ```
 
+Forge 1.20.1 版（多一道 remap：先编译成官方映射，再重映射到 SRG）：
+
+```bat
+python tools/build.py src\forge1201\java cp1201.txt build1201\classes --release 17
+python tools/remap.py D:\mmdmap1201\to_srg.tsv build1201\classes build1201f\classes_srg dir <client-srg.jar>
+python tools/makeres.py 1201forge
+python tools/packver.py build1201f
+python tools/jarverify.py out\lao-mu-si-yu-mo-zu-lao-1.0.0-forge-1.20.1.jar
+```
+
 `tools/makeres.py` 里所有目标版本的依赖区间都写死在 `TARGETS` /
 `NEOFORGE_TARGETS` 表中，这是为了绕开 Windows `cmd` 吞引号导致
 `">=26.2 <26.3"` 被拼成一个词的老问题。NeoForge 分支还会额外写出
@@ -150,6 +170,7 @@ python tools/jarverify.py out\lao-mu-si-yu-mo-zu-lao-1.0.0-neoforge-26.1.2.jar
 ```
 src/fabric/java/com/hanafubuki/duet/     Fabric 注册层 + 全部游戏逻辑
 src/neoforge/java/com/hanafubuki/duet/   NeoForge 注册层（DeferredRegister）
+src/forge1201/java/com/hanafubuki/duet/  Forge 1.20.1 注册层（SRG 重映射）
   DuetMod.java            注册实体、物品、音效，装配 AI
   SingerEntity.java       实体本体：对唱、战斗、仇恨、走位
   WanderGoal.java         没有同伴时的慢速游荡
@@ -176,9 +197,9 @@ Fabric 与 NeoForge 都使用 Mojang 官方映射，所以实体、AI、网格�
 
 ## 六、已知限制
 
-- **1.20.1 版本尚未提供。** 该版本的 `ResourceLocation` 与旧的
-  `EntityRenderer` 体系差别较大，需要单独一套源码。
-- 26.2 / 26.1.2 Fabric 与 26.1.2 NeoForge 均已实机验证。
+- 26.2 / 26.1.2 Fabric、26.1.2 NeoForge、1.20.1 Forge 均已实机验证。
+- 1.20.1 用的是旧版 `EntityRenderer` 体系与 SRG 映射，源码独立于 26.x，
+  修 bug 时需要两边同步。
 - 极端光照类光影包会把实体着色压黑——**原版生物同样如此**，属光影包行为，
   与本模组的渲染实现无关。
 - 模型是烘焙产物而非运行期加载 PMX，换模型要重新走烘焙流程。

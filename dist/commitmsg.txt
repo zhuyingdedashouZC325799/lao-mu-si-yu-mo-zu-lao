@@ -1,0 +1,7 @@
+Add Forge 1.20.1 port with SRG-safe health ceiling
+
+- new src/forge1201 tree: Forge registration layer, remapped to SRG
+- HealthCeiling now probes maxValue / f_22308_ / field_22308 and falls back
+  to a value-equality scan, so max_health is really raised above 1024
+- README: add 1.20.1 Forge row and the extra remap build step
+- dist: release notes and spec for v1.0.0-forge-1.20.1
