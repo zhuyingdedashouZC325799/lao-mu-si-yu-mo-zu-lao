@@ -6,9 +6,12 @@ build1201/
 out/
 *.class
 
-# Only the release jar under dist/ is tracked; other jars are local artifacts.
+# Release jars are distributed through GitHub Releases, not through git:
+# three 24 MB blobs in the tree would bloat every clone for no benefit.
+# The 26.2 jar was committed before this rule and stays tracked so early
+# clones keep working.
 *.jar
-!dist/*.jar
+!dist/老牧祀与魔族佬-1.0.0-fabric-26.2.jar
 
 # Editor and OS noise
 .vscode/
@@ -22,3 +25,4 @@ desktop.ini
 logs/
 *.log
 tmp/
+.local/

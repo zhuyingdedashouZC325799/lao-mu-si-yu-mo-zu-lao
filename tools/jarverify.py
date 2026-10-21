@@ -15,7 +15,6 @@ def out(s):
 
 
 REQUIRED = [
-    "fabric.mod.json",
     "com/hanafubuki/duet/DuetMod.class",
     "com/hanafubuki/duet/SingerEntity.class",
     "com/hanafubuki/duet/KickAttackGoal.class",
@@ -34,15 +33,47 @@ REQUIRED = [
     "assets/mmdduet/sounds/performance.json",
 ]
 
+# Which mod metadata file counts as "this jar can be loaded".
+#
+# The two loaders never share a jar: Fabric reads fabric.mod.json and
+# NeoForge reads META-INF/neoforge.mods.toml, and a jar carrying the wrong
+# one is rejected at startup. Checking for fabric.mod.json unconditionally
+# therefore reported every NeoForge build as broken.
+METADATA_ALTERNATIVES = [
+    "fabric.mod.json",
+    "META-INF/neoforge.mods.toml",
+]
+
 
 def main():
-    jar = sys.argv[1]
+    # cmd re-quotes every argv it hands back, even ones it split itself, so a
+    # path arrives as '"out\\x.jar"'.  Stripping is required or open() fails
+    # with "Invalid argument".
+    jar = sys.argv[1].strip()
+    if len(jar) >= 2 and jar[0] == '"' and jar[-1] == '"':
+        jar = jar[1:-1]
     with zipfile.ZipFile(jar) as z:
         names = set(z.namelist())
     missing = [n for n in REQUIRED if n not in names]
+    present_meta = [n for n in METADATA_ALTERNATIVES if n in names]
+    if len(present_meta) == 1:
+        out("metadata: " + present_meta[0])
+    elif not present_meta:
+        missing.append(" | ".join(METADATA_ALTERNATIVES))
+    else:
+        out("metadata: BOTH loaders declared, which breaks one of them")
+        missing.append("exactly one of " + " / ".join(METADATA_ALTERNATIVES))
+
     out("entries %d" % len(names))
     for n in REQUIRED:
         out(("ok   " if n in names else "MISS ") + n)
+
+    # pack.mcmeta is what makes the resource system mount this jar's assets at
+    # all; without it the mesh blobs ship but nothing ever loads them.
+    if "pack.mcmeta" in names:
+        out("ok   pack.mcmeta")
+    else:
+        out("note no pack.mcmeta (Fabric builds do not need one)")
     # The baked meshes and textures are large, so report their count rather
     # than listing them.
     tex = sum(1 for n in names if n.startswith("assets/mmdduet/entity/")

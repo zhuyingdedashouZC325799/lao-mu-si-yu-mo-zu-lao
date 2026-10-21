@@ -1,21 +1,31 @@
 # 老牧祀与魔族佬
 
-一个 Minecraft **Fabric 26.2** 模组：把两个 MMD 模型做成一对真实的中立生物，
+一个 Minecraft 模组：把两个 MMD 模型做成一对真实的中立生物，
 在八格内互相察觉到对方时会转身对视、对口型合唱同一首歌；被玩家攻击或遇到敌对
 生物时会停唱、追上去把对方踹死，打完再回到原位接着唱。
-
-> 目前发布版本：`1.0.0-fabric-26.2`（26.2 Fabric）。
-> 26.1.2 Fabric、26.1.2 NeoForge、1.20.1 Fabric 的移植保留在计划中。
 
 ---
 
 ## 一、下载与安装
 
-1. 装好 **Minecraft 26.2 + Fabric Loader 0.20.0 以上**。
-2. 把 [Fabric API](https://modrinth.com/mod/fabric-api)（`0.161.0+26.2` 或更高）
-   放进 `.minecraft/mods`。
-3. 把 `dist/老牧祀与魔族佬-1.0.0-fabric-26.2.jar` 也放进 `mods`。
-4. 需要 **Java 25**。
+### 支持的版本
+
+| 游戏版本 | 加载器 | 需要的 Java | 说明 |
+|---|---|---|---|
+| **26.2** | Fabric 0.20.0+ | Java 25 | 最早完成、实机验证通过 |
+| **26.1.2** | Fabric 0.19.2+ | Java 25 | 与 26.2 共用同一套源码 |
+| **26.1.2** | NeoForge 26.1.2.107 | Java 25 | 独立注册层，见 `src/neoforge` |
+
+成品 jar 都在 [Releases](../../releases) 页，对应的 tag 为
+`v1.0.0-fabric-26.2`、`v1.0.0-fabric-26.1.2`、`v1.0.0-neoforge-26.1.2`。
+
+### 装法
+
+1. 装好上表对应游戏版本与加载器。
+2. Fabric 版把 [Fabric API](https://modrinth.com/mod/fabric-api) 放进 `mods`；
+   NeoForge 版不需要额外前置。
+3. 把对应版本的 jar 放进 `.minecraft/mods`。
+4. 需要对应版本的 **Java**（26.x 为 Java 25）。
 
 可选但推荐：**AttributeFix**。本模组通过 `HealthCeiling` 自己放宽了原版
 `max_health` 的 1024 上限，所以不装也能正常显示 1325 点血；装了只是让其它
@@ -105,8 +115,8 @@ JEI 的物品列表，Jade 探头能看到名字与血量。
 换机器时改 `tools/build.py` 里的 `JDK`、以及 `cp262short.txt` 里的 classpath。
 
 ```bat
-:: 1. 编译（源码在 src/main/java）
-python tools/build.py src\main\java cp262short.txt build262\classes --release 25
+:: 1. 编译（源码在 src/fabric/java）
+python tools/build.py src\fabric\java cp262short.txt build262\classes --release 25
 
 :: 2. 生成资源树（写入 fabric.mod.json 的版本区间）
 python tools/makeres.py 262
@@ -115,18 +125,31 @@ python tools/makeres.py 262
 python tools/packzh.py
 
 :: 4. 自检：条目齐不齐、class 在不在
-python tools/jarverify.py out\mmdduet-1.0.0-fabric-26.2.jar
+python tools/jarverify.py out\lao-mu-si-yu-mo-zu-lao-1.0.0-fabric-26.2.jar
 ```
 
-`tools/makeres.py` 里所有目标版本的依赖区间都写死在 `TARGETS` 表中，
-这是为了绕开 Windows `cmd` 吞引号导致 `">=26.2 <26.3"` 被拼成一个词的老问题。
+NeoForge 版：
+
+```bat
+python tools/build.py src\neoforge\java cp261neoshort.txt build261neo\classes --release 25
+python tools/makeres.py 261neo
+python tools/packver.py build261neo
+python tools/jarverify.py out\lao-mu-si-yu-mo-zu-lao-1.0.0-neoforge-26.1.2.jar
+```
+
+`tools/makeres.py` 里所有目标版本的依赖区间都写死在 `TARGETS` /
+`NEOFORGE_TARGETS` 表中，这是为了绕开 Windows `cmd` 吞引号导致
+`">=26.2 <26.3"` 被拼成一个词的老问题。NeoForge 分支还会额外写出
+`META-INF/neoforge.mods.toml` 与 `pack.mcmeta`，并确保 `fabric.mod.json`
+不被打进 jar——同一个 jar 里出现两套元数据会导致加载器直接拒载。
 
 ---
 
 ## 五、目录结构
 
 ```
-src/main/java/com/hanafubuki/duet/
+src/fabric/java/com/hanafubuki/duet/     Fabric 注册层 + 全部游戏逻辑
+src/neoforge/java/com/hanafubuki/duet/   NeoForge 注册层（DeferredRegister）
   DuetMod.java            注册实体、物品、音效，装配 AI
   SingerEntity.java       实体本体：对唱、战斗、仇恨、走位
   WanderGoal.java         没有同伴时的慢速游荡
@@ -136,18 +159,28 @@ src/main/java/com/hanafubuki/duet/
   HealthCeiling.java      放宽 max_health 上限
   mesh/                   MMD 网格、骨骼、蒙皮、动画
   client/                 渲染器、音轨、口型驱动
-src/main/resources/
+src/fabric/resources/
   assets/mmdduet/         烘焙网格、贴图、音效、语言文件、物品模型
   data/                   伤害类型与 "无视护甲" 等标签
 tools/                    构建与自检脚本
-dist/                     可直接使用的成品 jar
+dist/                     Release 说明与发布参数
 ```
+
+两个加载器共用同一个 `com.hanafubuki.duet` 包名和同一套游戏逻辑：26.x 的
+Fabric 与 NeoForge 都使用 Mojang 官方映射，所以实体、AI、网格、渲染器这些
+文件可以逐字节相同，只有注册入口和事件挂钩不同。`src/neoforge` 里因此只有
+`DuetMod` 与 `DuetClient` 两个文件需要真正改写，其余文件是从 `src/fabric`
+同步过来的。
 
 ---
 
 ## 六、已知限制
 
-- 只在 **26.2 Fabric** 上验证过；其它版本需要按各自的映射与 API 调整。
+- **1.20.1 版本尚未提供。** 该版本的 `ResourceLocation` 与旧的
+  `EntityRenderer` 体系差别较大，需要单独一套源码。
+- 26.2 / 26.1.2 Fabric 与 26.1.2 NeoForge 均已实机验证。
+- 极端光照类光影包会把实体着色压黑——**原版生物同样如此**，属光影包行为，
+  与本模组的渲染实现无关。
 - 模型是烘焙产物而非运行期加载 PMX，换模型要重新走烘焙流程。
 - 名字牌高度是按当前模型头顶位置硬编码的，换模型后需要跟着调。
 
